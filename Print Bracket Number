@@ -1,0 +1,31 @@
+Given a string str, the task is to find the bracket numbers, i.e., for each bracket in str, return i if the bracket is the ith opening or closing bracket to appear in the string. 
+
+Solution:
+
+class Solution {
+  public:
+
+    vector<int> bracketNumbers(string str) {
+       string temp=str;
+       vector<int> ans;
+       stack<int> st;
+       
+       int bal=0;
+       
+       for(int i=0;i<temp.size();i++)
+       {
+           if(temp[i]=='(')
+           {
+               bal++;
+               ans.push_back(bal);
+               st.push(bal);
+           }
+           else if(temp[i]==')')
+           {
+               ans.push_back(st.top());
+               st.pop();
+           }
+       }
+       return ans;
+    }
+};
