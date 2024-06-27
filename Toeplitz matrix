@@ -1,0 +1,44 @@
+A Toeplitz (or diagonal-constant) matrix is a matrix in which each descending diagonal from left to right is constant, i.e., all elements in a diagonal are the same. Given a rectangular matrix mat, your task is to complete the function isToeplitz which returns true if the matrix is Toeplitz otherwise, it returns false.
+Examples:
+Input:
+mat = [[6, 7, 8],
+       [4, 6, 7],
+       [1, 4, 6]]
+Output: true
+Explanation: The test case represents a 3x3 matrix
+ 6 7 8 
+ 4 6 7 
+ 1 4 6
+Output will be true, as values in all downward diagonals from left to right contain the same elements.
+
+Solution:
+
+bool ok(vector<vector<int>>& mat,int i,int j, int n,int m)
+{
+    int res=mat[i][j];
+    while(++i <n && ++j <m)
+    {
+        if(mat[i][j]!=res)
+        return false;
+    }
+    return true;
+}
+
+
+bool isToeplitz(vector<vector<int>>& mat) {
+    int n=mat.size();
+    int m=mat[0].size();
+    
+    for(int i=0;i<m;i++)
+    {
+           if(!ok(mat,0,i,n,m))
+           return false;
+    }
+    for(int i=1;i<n;i++)
+    {
+        if(!ok(mat,i,0,n,m))
+        return false;
+    }
+    return true;
+    
+}
