@@ -1,0 +1,32 @@
+Given a linked list with string data, check whether the combined string formed is palindrome. If the combined string is palindrome then return true otherwise return false.
+
+Solution:
+
+
+class Solution {
+  public:
+    bool compute(Node* head) {
+string combinedString;
+        Node* current = head;
+        while (current != nullptr) {
+            combinedString += current->data;
+            current = current->next;
+        }
+        // Check if the combined string is a palindrome
+        return isPalindrome(combinedString);
+    }
+    
+  private:
+    bool isPalindrome(const string& str) {
+        int left = 0;
+        int right = str.length() - 1;
+        while (left < right) {
+            if (str[left] != str[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }  
+};
