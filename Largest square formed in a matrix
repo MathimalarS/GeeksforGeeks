@@ -1,0 +1,41 @@
+Given a binary matrix mat of size n * m, find out the maximum length of a side of a square sub-matrix with all 1s.
+Examples:
+
+Input: n = 6, m = 5
+mat = [[0, 1, 1, 0, 1], 
+       [1, 1, 0, 1, 0],
+       [0, 1, 1, 1, 0],
+       [1, 1, 1, 1, 0],
+       [1, 1, 1, 1, 1],
+       [0, 0, 0, 0, 0]]
+Output: 3
+
+Solution:
+
+class Solution {
+  public:
+    int maxSquare(int n, int m, vector<vector<int>> mat) {
+vector<vector<int>> dp(n, vector<int>(m, 0));
+        
+        int max_side = 0; // Initialize the maximum side length to 0
+        
+        // Fill the DP array
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (mat[i][j] == 1) {
+                    if (i == 0 || j == 0) {
+                        // For cells in the first row or first column, the DP value is the same as the mat value
+                        dp[i][j] = 1;
+                    } else {
+                        // For other cells, calculate the DP value
+                        dp[i][j] = min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]}) + 1;
+                    }
+                    // Update the maximum side length found so far
+                    max_side = max(max_side, dp[i][j]);
+                }
+            }
+        }
+        
+        // Return the maximum side length
+        return max_side;    }
+};
