@@ -1,0 +1,38 @@
+Given a string s, the task is to find the minimum characters to be added at the front to make the string palindrome.
+Note: A palindrome string is a sequence of characters that reads the same forward and backward.
+
+Examples:
+Input: s = "abc"
+Output: 2
+Explanation: Add 'b' and 'c' at front of above string to make it palindrome : "cbabc"
+
+Solution:
+class Solution {
+    public static int minChar(String s) {
+        // Step 1: Create the reverse of the given string
+        String rev_s = new StringBuilder(s).reverse().toString();
+        
+        // Step 2: Form the combined string with a separator
+        String combined = s + "#" + rev_s;
+        
+        // Step 3: Build the LPS (Longest Prefix-Suffix) array
+        int n = combined.length();
+        int[] lps = new int[n];
+        int len = 0;  // Length of the previous longest prefix suffix
+        
+        for (int i = 1; i < n; i++) {
+            while (len > 0 && combined.charAt(i) != combined.charAt(len)) {
+                len = lps[len - 1];
+            }
+            if (combined.charAt(i) == combined.charAt(len)) {
+                len++;
+                lps[i] = len;
+            } else {
+                lps[i] = 0;
+            }
+        }
+        
+        // Step 4: Minimum characters to be added
+        return s.length() - lps[n - 1];
+    }
+}
