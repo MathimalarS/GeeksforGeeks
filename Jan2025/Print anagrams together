@@ -1,0 +1,16 @@
+class Solution {
+    public ArrayList<ArrayList<String>> anagrams(String[] arr) {
+        LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
+        
+        for (String str : arr) {
+            char[] ch = str.toCharArray();
+            Arrays.sort(ch);
+            String sorted = new String(ch);
+            map.putIfAbsent(sorted, new ArrayList<>());
+            map.get(sorted).add(str);
+        }
+        
+        ArrayList<ArrayList<String>> result = new ArrayList<>(map.values());
+        return result;
+    }
+}
