@@ -1,0 +1,34 @@
+class Solution {
+    public List<Integer> sumClosest(int[] arr, int target) {
+        if (arr.length < 2) {
+            return new ArrayList<>();
+        }
+
+        Arrays.sort(arr);
+
+        int closestSum = Integer.MAX_VALUE;
+        int maxAbsDiff = Integer.MIN_VALUE;
+        List<Integer> result = new ArrayList<>();
+
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            int absDiff = Math.abs(arr[right] - arr[left]);
+
+            if (Math.abs(sum - target) < Math.abs(closestSum - target) ||
+                (Math.abs(sum - target) == Math.abs(closestSum - target) && absDiff > maxAbsDiff)) {
+                closestSum = sum;
+                maxAbsDiff = absDiff;
+                result = Arrays.asList(arr[left], arr[right]);
+            }
+
+            if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return result;
+    }
+}
